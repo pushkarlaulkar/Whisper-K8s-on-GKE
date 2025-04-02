@@ -15,7 +15,6 @@ metadata:
   name: argocd-security-config
   namespace: argocd
 spec:
-  sslPolicy: gke-ingress-ssl-policy-https
   redirectToHttps:
     enabled: true
 
@@ -26,6 +25,7 @@ metadata:
   name: argocd-ingress
   namespace: argocd
   annotations:
+    kubernetes.io/ingress.class: "gce"
     networking.gke.io/managed-certificates: "argocd-cert"
     networking.gke.io/v1beta1.FrontendConfig: "argocd-security-config"
     #alb.ingress.kubernetes.io/backend-protocol: HTTPS
