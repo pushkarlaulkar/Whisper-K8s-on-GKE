@@ -1,0 +1,45 @@
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: yopass-cert
+  namespace: yopass
+spec:
+  domains:
+    - # Replace with your domain
+
+---
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: yopass-security-config
+  namespace: yopass
+spec:
+  sslPolicy: gke-ingress-ssl-policy-https
+  redirectToHttps:
+    enabled: true
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: yopass-ingress
+  namespace: yopass
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    networking.gke.io/managed-certificates: "yopass-cert"
+    networking.gke.io/v1beta1.FrontendConfig: "yopass-security-config"
+spec:
+  tls:
+  - hosts:
+    - # Replace with your domain
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix 
+            backend:
+              service:
+                name: yopass
+                port:
+                  number: 8082
