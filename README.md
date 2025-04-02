@@ -18,13 +18,13 @@ Instructions to deploy **YoPass** on GCP GKE Auto Pilot cluster
 
 **Helm**
 To install this app using Helm, perform below steps
-  1. Generate a certificate from ACM for your domain name. The certificate arn will be required in the next step since we are running ALB on port 443.
-  2. Run the command
+  1. Run the command
 
      ```
-     helm install whisper ./helm --namespace yopass --create-namespace --set certificate_arn=arn_got_from_previous_step
+     helm install whisper ./helm --namespace yopass --create-namespace --set domain_name=domain_name
      ```
-  3. Get the ALB DNS using ` kubectl -n yopass get ingress ` and point the domain name in Route 53 to the ALB as an A (alias) record.
+  2. Get the ALB IP using ` kubectl -n yopass get ingress ` ( Please wait couple of minutes ). Create an A record in **Cloud DNS** or your own DNS service pointing your domain name to this IP.
+  3. Once the DNS entry has been added it will take couple of minutes ( can be 60 minutes in some cases ) for the certificate to be generated. Run ` kubectl -n yopass get managedcertificate ` or in GCP console to check for **Active** status.
   4. Access the app using ` https://your_domain_name `.
   5. Uninstall the app using ` helm uninstall whisper --namespace yopass `.
 
