@@ -26,6 +26,7 @@ metadata:
   name: yopass-ingress
   namespace: yopass
   annotations:
+    kubernetes.io/ingress.class: "gce"
     networking.gke.io/managed-certificates: "yopass-cert"
     networking.gke.io/v1beta1.FrontendConfig: "yopass-security-config"
 spec:
@@ -33,13 +34,8 @@ spec:
   tls:
   - hosts:
     - # Replace with your domain
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service:
-                name: yopass
-                port:
-                  number: 8082
+  defaultBackend:
+    service:
+      name: yopass
+      port:
+        number: 8082
