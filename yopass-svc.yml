@@ -5,6 +5,8 @@ metadata:
   namespace: yopass
   labels:
     app: yopass
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
 spec:
   type: ClusterIP
   selector:
