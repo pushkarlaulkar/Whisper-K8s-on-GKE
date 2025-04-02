@@ -15,7 +15,6 @@ metadata:
   name: yopass-security-config
   namespace: yopass
 spec:
-  sslPolicy: gke-ingress-ssl-policy-https
   redirectToHttps:
     enabled: true
 
@@ -29,17 +28,11 @@ metadata:
     kubernetes.io/ingress.class: "gce"
     networking.gke.io/managed-certificates: "yopass-cert"
     networking.gke.io/v1beta1.FrontendConfig: "yopass-security-config"
+    acme.cert-manager.io/http01-edit-in-place: "true"
 spec:
-  tls:
-  - hosts:
-    - {{ .Values.domain_name }}
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service:
-                name: yopass
-                port:
-                  number: 8082
+  ingressClassName: gce
+  defaultBackend:
+    service:
+      name: yopass
+      port:
+        number: 8082
