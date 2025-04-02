@@ -1,16 +1,18 @@
-Instructions to deploy **YoPass** on AWS EKS Auto Mode
-  1. Deploy EKS cluster through Auto Mode through AWS Console. Add the ` CoreDNS `, ` VPC CNI `, ` Kube Proxy ` add ons.
+Instructions to deploy **YoPass** on GCP GKE Auto Pilot cluster
+  1. Deploy GKE Auto Pilot cluster GCP Console.
   2. Create a namespace. ` kubectl create ns yopass `
   3. Deploy the **memcached** & **yopass** deployment & service using the below command
 
      ```
      kubectl -n yopass apply -f yopass-dep.yml -f yopass-svc.yml -f memcached-dep.yml -f memcached-svc.yml
      ```
-  4. Deploy **Ingress**, **Ingress Class** & **Ingress Params** which will create an ALB listening on port 443. We will need to provide the arn of the certificate in the **Ingress** object. The certificate for the domain name needs to be created in ACM and DNS validation or Email validation needs to be done prior to creating these resources.
-  5. Run the command ` kubectl -n yopass apply -f ingress-all.yml `
-  6. Run ` kubectl -n yopass get ingress ` to retrieve the ALB DNS.
-  7. Point the domain name in Route 53 to the ALB as an A (alias) record.
-  8. Access the app using `https://your_domain_name`.
+  4. Deploy **Ingress**, **Managed Certificate** & **Frontend Config** which will create an ALB listening on port 443 by running below command. Before running below command, in the **Managed Certificate** put the domain name you need for your application.
+     ```
+     kubectl -n yopass apply -f ingress-all.yml
+     ```
+  7. Run ` kubectl -n yopass get ingress ` to retrieve the ALB IP ( Please wait couple of minutes ). Create an A record in **Cloud DNS** or your own DNS service pointing your domain name to this IP.
+  8. Once the DNS entry has been added it will take couple of minutes ( can be 60 minutes in some cases ) for the certificate to be generated. Run ` kubectl -n yopass get managedcertificate ` or in GCP console to check for **Active** status.
+  9. Access the app using `https://your_domain_name`.
 
 -----------------------------
 
