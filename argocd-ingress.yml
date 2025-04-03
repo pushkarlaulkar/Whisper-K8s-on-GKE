@@ -32,16 +32,8 @@ metadata:
     #alb.ingress.kubernetes.io/cors-expose-headers: "*, X-CustomResponseHeader"
 spec:
   ingressClassName: gce
-  tls:
-  - hosts:
-    - # Replace with your argocd domain
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service:
-                name: argocd-server
-                port:
-                  number: 80
+  defaultBackend:
+    service:
+      name: argocd-server
+      port:
+        number: 80
