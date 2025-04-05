@@ -30,7 +30,7 @@ To install this app using Helm, perform below steps
 
 -----------------------------
 
-**ArgoCD** installation. **NAT Gateway** is required to download container images.
+**ArgoCD** installation. **NAT Gateway** is required to download **ArgoCD** container images.
 
 To install this app using ArgoCD, perform below steps
   1. Create a namespace. ` kubectl create ns argocd `.
