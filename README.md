@@ -44,6 +44,13 @@ To install this app using ArgoCD, perform below steps
      ```
      kubectl patch service argocd-server -n argocd -p '{"metadata": {"annotations": {"cloud.google.com/backend-config": "{\"ports\": {\"http\": \"argocd-backend-config\"}}"}}}'
      ```
+  4. Path the ConfigMap **argocd-cmd-params-cm** to add `server.insecure : true`, then scale the deployment to 0 & then 1
+
+     ```
+     kubectl -n argocd patch configmap argocd-cmd-params-cm --type merge -p '{"data":{"server.insecure":"true"}}'
+     kubectl -n argocd scale deploy argocd-server --replicas=0
+     kubectl -n argocd scale deploy argocd-server --replicas=1
+     ```
   4. Deploy **ArgoCD Ingress**, **ArgoCD Managed Certificate** & **ArgoCD Frontend Config** which will create an ALB listening on port 443 by running below command. Before running below command, in the **ArgoCD Managed Certificate** put the domain name you need for your ArgoCD application.
 
      ```
