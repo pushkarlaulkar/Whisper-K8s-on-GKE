@@ -70,7 +70,7 @@ To install this app using ArgoCD, perform below steps
 **Prometheus** & **Grafana** monitoring. **NAT Gateway** is required to download container images.
 
 To install the Prometheus stack, perform below steps
-   1. Apply the monitoring stack manifest
+   1. Apply the monitoring stack manifest. Set a password for grafana admin user
 
       ```
       helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
