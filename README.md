@@ -67,7 +67,7 @@ To install this app using ArgoCD, perform below steps
 
 -----------------------------
 
-**Prometheus** & **Grafana** monitoring. **NAT Gateway** is required to download **ArgoCD** container images.
+**Prometheus** & **Grafana** monitoring. **NAT Gateway** is required to download container images.
 
 To install the Prometheus stack, perform below steps
    1. Apply the monitoring stack manifest
